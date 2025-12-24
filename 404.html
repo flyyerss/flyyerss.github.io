@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Abrindo JobsNow...</title>
+    <script>
+        // Pega o ID da vaga que está no final do link
+        var path = window.location.pathname; 
+        // Exemplo: /job/123-abc -> pega o "123-abc"
+        var jobId = path.split('/').pop();
+
+        // Tenta abrir o App forçadamente usando o esquema interno
+        // Se o App estiver instalado, ele vai abrir e fechar o navegador
+        window.location.href = "jobsnow://job/" + jobId;
+        
+        // Opcional: Redireciona para a home se demorar muito (fallback)
+        setTimeout(function() {
+            document.getElementById("msg").innerText = "Se o app não abrir, certifique-se que ele está instalado.";
+        }, 3000);
+    </script>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #F5F9FF; }
+        .btn { background-color: #1565C0; color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Abrindo o App...</h1>
+    <p id="msg">Aguarde um momento.</p>
+    <br><br>
+    <a href="#" onclick="window.location.href='jobsnow://job/' + window.location.pathname.split('/').pop(); return false;" class="btn">CLIQUE PARA ABRIR</a>
+</body>
+</html>
