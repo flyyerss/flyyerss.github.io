@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <meta charset="utf-8">
-    <title>Abrindo JobsNow...</title>
-    <script>
-        // Pega o ID da vaga que está no final do link
-        var path = window.location.pathname; 
-        // Exemplo: /job/123-abc -> pega o "123-abc"
-        var jobId = path.split('/').pop();
-
-        // Tenta abrir o App forçadamente usando o esquema interno
-        // Se o App estiver instalado, ele vai abrir e fechar o navegador
-        window.location.href = "jobsnow://job/" + jobId;
-        
-        // Opcional: Redireciona para a home se demorar muito (fallback)
-        setTimeout(function() {
-            document.getElementById("msg").innerText = "Se o app não abrir, certifique-se que ele está instalado.";
-        }, 3000);
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando para JobsNow...</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #F5F9FF; }
-        .btn { background-color: #1565C0; color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #F5F9FF;
+            text-align: center;
+        }
+        h1 { color: #1565C0; margin-bottom: 10px; }
+        p { color: #555; margin-bottom: 30px; font-size: 18px; }
+        .btn {
+            background-color: #1565C0;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+        .btn:active { background-color: #0D47A1; }
     </style>
 </head>
 <body>
-    <h1>🚀 Abrindo o App...</h1>
-    <p id="msg">Aguarde um momento.</p>
-    <br><br>
-    <a href="#" onclick="window.location.href='jobsnow://job/' + window.location.pathname.split('/').pop(); return false;" class="btn">CLIQUE PARA ABRIR</a>
+
+    <h1>🚀 Abrindo o JobsNow...</h1>
+    <p>Se o aplicativo não abrir automaticamente,<br>clique no botão abaixo:</p>
+    
+    <a id="deepLinkBtn" href="#" class="btn">ABRIR VAGA NO APP</a>
+
+    <script>
+        // 1. Pega o ID da vaga da URL (ex: /job/123 -> 123)
+        var path = window.location.pathname;
+        var jobId = path.split('/').pop();
+
+        // 2. Monta o link interno do app
+        var deepLink = "jobsnow://job/" + jobId;
+
+        // 3. Atualiza o botão para ter o link certo
+        document.getElementById("deepLinkBtn").href = deepLink;
+
+        // 4. Tenta abrir automaticamente após 1 segundo (para dar tempo da tela aparecer)
+        setTimeout(function() {
+            window.location.href = deepLink;
+        }, 1000);
+    </script>
+
 </body>
 </html>
